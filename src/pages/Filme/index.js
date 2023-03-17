@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import {useParams, useNavigate} from 'react-router-dom';
 import api from '../../services/api';
 import './filme-info.css';
+import { toast } from 'react-toastify'
 
 function Filme(){
 
@@ -23,7 +24,7 @@ function Filme(){
                 setLoading(false);
             })
             .catch(()=>{
-                console.log("Xablau");
+                toast.error("Erro ao buscar filme selecionado");
                 navigate("/", {replace: true});
                 return;
             });
@@ -55,13 +56,13 @@ function Filme(){
         });
 
         if(hasFilme){
-            alert("Este filme já está na lista!");
+            toast.warn("Este filme já está na sua lista de favoritos");
             return;
         }
 
         filmesSalvos.push(filme);
         localStorage.setItem("@filmesFavoritos", JSON.stringify(filmesSalvos));
-        alert("Filme salvo");
+        toast.success("Filme salvo com sucesso");
     }
 
     return(
